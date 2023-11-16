@@ -1,3 +1,6 @@
+process.env.TEST_DATABASE_URL = 'postgresql://equansa00:1Chriss1@localhost/messagely_test';
+require('dotenv').config()
+
 const db = require("../db");
 const User = require("../models/user");
 const Message = require("../models/message");

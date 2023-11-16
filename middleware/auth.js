@@ -6,6 +6,7 @@ const { SECRET_KEY } = require("../config");
 /** Middleware: Authenticate user. */
 
 function authenticateJWT(req, res, next) {
+  console.log('authenticateJWT executed for route:', req.path);
   try {
     const tokenFromBody = req.body._token;
     const payload = jwt.verify(tokenFromBody, SECRET_KEY);
@@ -19,6 +20,7 @@ function authenticateJWT(req, res, next) {
 /** Middleware: Requires user is authenticated. */
 
 function ensureLoggedIn(req, res, next) {
+  console.log('ensureLoggedIn executed for route:', req.path);
   if (!req.user) {
     return next({ status: 401, message: "Unauthorized" });
   } else {
@@ -29,6 +31,7 @@ function ensureLoggedIn(req, res, next) {
 /** Middleware: Requires correct username. */
 
 function ensureCorrectUser(req, res, next) {
+  console.log('ensureCorrectUser executed for route:', req.path);
   try {
     if (req.user.username === req.params.username) {
       return next();

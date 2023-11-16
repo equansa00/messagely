@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <div class="container">
+        <h2>Your Messages</h2>
+        <div id="messagesList"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        async function loadMessages() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login.html'; // Redirect to login if no token
+                return;
+            }
+    
+            const response = await makeApiRequest('/messages', 'GET', null, token);
+            
+            const messagesList = document.getElementById('messagesList');
+            messagesList.innerHTML = response.messages.map(message => 
+                `<div>${message.body} - From: ${message.from_user.username}</div>` // Display each message
+            ).join('');
+        }
+    
+        loadMessages();
+    </script>
+    
+</body>
+</html>
